@@ -1,0 +1,121 @@
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+
+
+class Complex
+{
+private:
+    double re, im;
+
+public:
+
+    Complex()
+    {
+        re = 0;
+        im = 0;
+    };
+    
+
+    Complex(double r, double i)
+    {
+        re = r;
+        im = i;
+    }
+
+    Complex(const Complex& comp)
+    {
+        re = comp.re;
+        im = comp.im;
+    }
+
+    ~Complex() {}
+
+
+    Complex& operator = (const Complex& comp)
+    {
+        re = comp.re;
+        im = comp.im;
+
+        return (*this);
+    }
+
+    Complex operator + (const Complex& comp)
+    {
+        Complex a;
+
+        a.re = re + comp.re;
+        a.im = im + comp.re;
+
+        return a;
+    }
+
+    Complex operator - (const Complex& comp)
+    {
+        Complex a;
+
+        a.re = re - comp.re;
+        a.im = im - comp.re;
+
+        return a;
+    }
+
+    Complex operator * (const Complex& comp)
+    {
+        Complex a;
+
+        a.re = re * comp.re;
+        a.im = re * comp.im;
+
+        return a;
+    }
+
+    Complex operator / (const Complex& comp)
+    {
+        Complex a;
+
+        double r = comp.re * comp.re + comp.im * comp.im;
+        a.re = (re * comp.re + im * comp.im) / r;
+        a.re = (im * comp.re - re * comp.im) / r;
+
+        return a;
+    }
+
+     friend ostream& operator<<(ostream&, const Complex&);
+     friend istream& operator>>(istream&, const Complex&); 
+
+};
+
+std:: ostream& operator<< (std:: ostream& out, const Complex& comp)
+{
+    out << comp.re;
+    if (comp.im > 0)
+        out << "+";
+    out << comp.im << "i";
+
+    return out;
+}
+
+int main()
+{
+    Complex Test1(3, 1);
+    Complex Test2(7, -8);
+
+    cout << Test1 << "; " << Test2 << endl;
+
+    cout << Test1 + Test2 << endl;
+
+    cout << Test1 - Test2 << endl;
+
+    cout << Test1 * Test2 << endl;
+
+    cout << Test1 / Test2 << endl;
+
+    Test1 = Test2;
+
+    cout << Test1 << " = " << Test2 << endl;
+
+    return 0;
+}
+
